@@ -15,6 +15,10 @@ jobs:
         source_branch: gh-pages
         destination_branch: ${{ secrets.INTERMEDIATE_BRANCH }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: merge master and push
+      run: | 
+      git merge master --allow-unrelated-histories
+      git push 
     # - uses: repo-sync/pull-request@v2
     #   name: Create pull request
     #   with:
