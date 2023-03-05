@@ -38,6 +38,7 @@ jobs:
             git merge master --allow-unrelated-histories
             git push
   deploy:
+    needs: repo-sync
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
