@@ -19,5 +19,5 @@ jobs:
       name: Create pull request
       with:
         source_branch: ${{ secrets.INTERMEDIATE_BRANCH }}
-        destination_branch: gh_pages
+        destination_branch: master
         github_token: ${{ secrets.GITHUB_TOKEN }}
