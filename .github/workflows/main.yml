@@ -16,9 +16,9 @@ jobs:
         destination_branch: ${{ secrets.INTERMEDIATE_BRANCH }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
     - name: setup git config
-        run: |
-          git config user.name "parama4u"
-          git config user.email "parama4u@gmail.com"
+      run: |
+            git config user.name "parama4u"
+            git config user.email "parama4u@gmail.com"
     - name: merge master and push
       run: | 
             git checkout wip
