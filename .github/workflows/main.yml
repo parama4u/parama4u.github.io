@@ -12,7 +12,7 @@ jobs:
       name: Sync repo to branch
       with:
         source_repo: ${{ secrets.SOURCE_REPO }}
-        source_branch: gh_pages
+        source_branch: gh-pages
         destination_branch: ${{ secrets.INTERMEDIATE_BRANCH }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
     - uses: repo-sync/pull-request@v2
