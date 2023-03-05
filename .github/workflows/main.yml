@@ -18,6 +18,6 @@ jobs:
     - uses: repo-sync/pull-request@v2
       name: Create pull request
       with:
-        source_branch: master
-        destination_branch: master
+        source_branch: ${{ secrets.INTERMEDIATE_BRANCH }}
+        destination_branch: gh_pages
         github_token: ${{ secrets.GITHUB_TOKEN }}
