@@ -17,8 +17,8 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
     - name: merge master and push
       run: | 
-      git merge master --allow-unrelated-histories
-      git push 
+            git merge master --allow-unrelated-histories
+            git push 
     # - uses: repo-sync/pull-request@v2
     #   name: Create pull request
     #   with:
