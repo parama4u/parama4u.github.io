@@ -1,0 +1,61 @@
+on:
+  push:
+  schedule: 
+  - cron: "* */4 * * *" 
+
+
+jobs:
+  repo-sync:
+    name: Repo Sync
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: repo-sync/github-sync@v2
+      name: Sync repo to branch
+      with:
+        source_repo: ${{ secrets.SOURCE_REPO }}
+        source_branch: gh-pages
+        destination_branch: ${{ secrets.INTERMEDIATE_BRANCH }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: setup git config
+      run: |
+            git config user.name "parama4u"
+            git config user.email "parama4u@gmail.com"
+    - name: merge master and push
+      run: | 
+            git checkout wip
+            git add .
+            git merge master --allow-unrelated-histories
+            git push
+  deploy:
+    needs: repo-sync
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    # Allow one concurrent deployment
+    concurrency:
+      group: "pages"
+      cancel-in-progress: true
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: wip
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          # Upload entire repository
+          path: '.'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
